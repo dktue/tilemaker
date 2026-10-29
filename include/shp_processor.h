@@ -45,7 +45,7 @@ private:
 
 	// Process an individual shapefile record
 	void processShapeGeometry(SHPObject* shape, AttributeIndex attrIdx, 
-	                          const LayerDef &layer, uint layerNum, bool hasName, const std::string &name, int32_t score);
+	                          const LayerDef &layer, uint layerNum, bool hasName, const std::string &name, int32_t score, uint minzoom);
 };
 
 #endif //_SHP_PROCESSOR_H
