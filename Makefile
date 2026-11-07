@@ -156,13 +156,16 @@ test: \
 	test_append_vector \
 	test_attribute_store \
 	test_config_validator \
+	test_correct \
 	test_deque_map \
 	test_geom \
 	test_helpers \
 	test_options_parser \
+	test_ordered_batches \
 	test_pbf_reader \
 	test_pooled_string \
 	test_relation_roles \
+	test_shp_mem_tiles \
 	test_significant_tags \
 	test_sorted_node_store \
 	test_sorted_way_store \
@@ -193,6 +196,10 @@ src/config_schema.h: resources/config-schema.json
 
 src/config_validator.o: src/config_schema.h
 
+test_correct: \
+	test/correct.test.o
+	$(CXX) $(CXXFLAGS) -o test.correct $^ $(INC) $(LIB) $(LDFLAGS) && ./test.correct
+
 test_deque_map: \
 	test/deque_map.test.o
 	$(CXX) $(CXXFLAGS) -o test.deque_map $^ $(INC) $(LIB) $(LDFLAGS) && ./test.deque_map
@@ -222,6 +229,10 @@ test_options_parser: \
 	src/options_parser.o \
 	test/options_parser.test.o
 	$(CXX) $(CXXFLAGS) -o test.options_parser $^ $(INC) $(LIB) $(LDFLAGS) && ./test.options_parser
+
+test_ordered_batches: \
+	test/ordered_batches.test.o
+	$(CXX) $(CXXFLAGS) -o test.ordered_batches $^ $(INC) $(LIB) $(LDFLAGS) && ./test.ordered_batches
 
 test_osm_store: \
 	test/osm_store.test.o
@@ -261,6 +272,22 @@ test_sorted_way_store: \
 	src/sorted_way_store.o \
 	test/sorted_way_store.test.o
 	$(CXX) $(CXXFLAGS) -o test.sorted_way_store $^ $(INC) $(LIB) $(LDFLAGS) && ./test.sorted_way_store
+
+test_shp_mem_tiles: \
+	src/attribute_store.o \
+	src/coordinates.o \
+	src/coordinates_geom.o \
+	src/declutter.o \
+	src/geom.o \
+	src/mmap_allocator.o \
+	src/output_object.o \
+	src/pooled_string.o \
+	src/shp_mem_tiles.o \
+	src/tile_coordinates_set.o \
+	src/tile_data.o \
+	src/tile_sorting.o \
+	test/shp_mem_tiles.test.o
+	$(CXX) $(CXXFLAGS) -o test.shp_mem_tiles $^ $(INC) $(LIB) $(LDFLAGS) && ./test.shp_mem_tiles
 
 test_tile_coordinates_set: \
 	src/tile_coordinates_set.o \
